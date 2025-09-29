@@ -1,0 +1,25 @@
+name: AI Code Review (Gemini)
+
+on:
+  pull_request:
+
+permissions:
+  pull-requests: write
+
+jobs:
+  code-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Gemini Code Review
+        # (例) Geminiを使うためのサードパーティ製Action
+        uses: amannn/action-gemini-code-review@v1
+        with:
+          # GitHub Secretsに登録したGoogle AIのAPIキーを指定
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # レビューに使用するモデルを指定 (Gemini 1.5 Flashは高速かつ安価)
+          MODEL: "gemini-1.5-flash"
+
+          # プロンプトをカスタマイズして、レビューの観点を指示することも可能
+          PROMPT: "あなたは42のC言語課題をレビューする専門家です。Norminetteの規約違反がないか、メモリリークの可能性がないか、より効率的な書き方はないかを確認し、日本語で簡潔にフィードバックしてください。"
