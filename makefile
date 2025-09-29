@@ -6,7 +6,7 @@
 #    By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/16 21:57:10 by mirokugo          #+#    #+#              #
-#    Updated: 2025/09/29 21:06:53 by mirokugo         ###   ########.fr        #
+#    Updated: 2025/09/29 22:23:49 by mirokugo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,4 +38,3 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(LIBS) -o $(NAME)
 
-/*this is a commit to test of CI*/

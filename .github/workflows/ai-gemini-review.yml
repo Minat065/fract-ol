@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Gemini Code Review
         # (例) Geminiを使うためのサードパーティ製Action
-        uses: amannn/action-gemini-code-review@v1
+        uses: z-owned/google-gemini-pr-review@v1
         with:
           # GitHub Secretsに登録したGoogle AIのAPIキーを指定
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
