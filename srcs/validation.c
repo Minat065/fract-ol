@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,14 +12,38 @@
 
 #include "fractol.h"
 
-double	screen_to_complex_x(int x, t_data *data)
+static int	is_valid_number(char *str)
 {
-	return ((x - data->width / 2.0) * 4.0
-		/ (data->width * data->fractal.zoom) + data->fractal.offset_x);
+	int	i;
+	int	dot_count;
+
+	i = 0;
+	dot_count = 0;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	if (!str[i])
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == '.')
+		{
+			dot_count++;
+			if (dot_count > 1)
+				return (0);
+		}
+		else if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-double	screen_to_complex_y(int y, t_data *data)
+int	validate_julia_args(char *real_str, char *imag_str)
 {
-	return ((y - data->height / 2.0) * 4.0
-		/ (data->height * data->fractal.zoom) + data->fractal.offset_y);
+	if (!is_valid_number(real_str) || !is_valid_number(imag_str))
+	{
+		ft_printf("Error: Julia parameters must be valid numbers\n");
+		return (0);
+	}
+	return (1);
 }

@@ -17,7 +17,12 @@ int	main(int argc, char **argv)
 	if (argc == 2 && !ft_strncmp(argv[1], "mandelbrot", 11))
 		run_mandelbrot();
 	else if (argc == 4 && !ft_strncmp(argv[1], "julia", 6))
-		run_julia(ft_atof(argv[2]),ft_atof(argv[3]));
+	{
+		if (validate_julia_args(argv[2], argv[3]))
+			run_julia(ft_atof(argv[2]), ft_atof(argv[3]));
+		else
+			return (1);
+	}
 	else
 	{
 		print_usage();
@@ -44,7 +49,7 @@ void	print_usage(void)
 	ft_printf("  C: Change color scheme\n");
 }
 
-int run_mandelbrot(void)
+int	run_mandelbrot(void)
 {
 	t_data	data;
 
@@ -61,7 +66,7 @@ int run_mandelbrot(void)
 	return (0);
 }
 
-int run_julia(double real, double imag)
+int	run_julia(double real, double imag)
 {
 	t_data	data;
 
@@ -77,5 +82,3 @@ int run_julia(double real, double imag)
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }
-
-

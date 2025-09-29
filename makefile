@@ -26,7 +26,9 @@ SRC = srcs/main.c \
 	  srcs/draw.c \
 	  srcs/events.c \
 	  srcs/utils.c \
-	  srcs/fractals.c
+	  srcs/fractals.c \
+	  srcs/colors.c \
+	  srcs/validation.c
 
 OBJ = $(SRC:.c=.o)
 

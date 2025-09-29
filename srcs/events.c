@@ -48,23 +48,23 @@ int	key_hook(int keycode, t_data *data)
 
 int	mouse_hook(int button, int x, int y, t_data *data)
 {
-	double	mouse_x;
-	double	mouse_y;
+	double	mouse_real;
+	double	mouse_imag;
+	double	zoom_factor;
 
 	if (button == 4 || button == 5)
 	{
-		mouse_x = screen_to_complex_x(x, data);
-		mouse_y = screen_to_complex_y(y, data);
+		mouse_real = screen_to_complex_x(x, data);
+		mouse_imag = screen_to_complex_y(y, data);
 		if (button == 4)
-		{
-			data->fractal.zoom *= 1.1;
-		}
-		else if (button == 5)
-		{
-			data->fractal.zoom *= 0.9;
-		}
-		data->fractal.offset_x = mouse_x - (screen_to_complex_x(x, data) - data->fractal.offset_x);
-		data->fractal.offset_y = mouse_y - (screen_to_complex_y(y, data) - data->fractal.offset_y);
+			zoom_factor = 1.1;
+		else
+			zoom_factor = 0.9;
+		data->fractal.offset_x = mouse_real + (data->fractal.offset_x
+				- mouse_real) / zoom_factor;
+		data->fractal.offset_y = mouse_imag + (data->fractal.offset_y
+				- mouse_imag) / zoom_factor;
+		data->fractal.zoom *= zoom_factor;
 		render_fractal(data);
 	}
 	return (0);
