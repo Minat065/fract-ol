@@ -1,0 +1,54 @@
+# ワークフローの名前
+name: C Project CI
+
+# ワークフローが実行されるタイミング
+on:
+  # mainブランチにプッシュされた時
+  push:
+    branches: [ main, master ]
+  # Pull Requestが作成されたり、更新された時
+  pull_request:
+    branches: [ main, master ]
+
+# 実行されるジョブ
+jobs:
+  # "build-and-test" という名前のジョブ
+  build-and-test:
+    # Ubuntuの最新環境で実行
+    runs-on: ubuntu-latest
+
+    # ジョブのステップ
+    steps:
+      # --- 1. セットアップ ---
+
+      # リポジトリのコードを仮想環境にチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Python環境をセットアップ (norminetteの実行に必要)
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # --- 2. Normチェック ---
+      
+      # PyPIではなくGitHubから最新版のnorminetteをインストール
+      - name: Install latest Norminette
+        run: pip3 install git+https://github.com/42School/norminette.git
+
+      # norminetteを実行してコーディング規約をチェック
+      - name: Run Norminette check
+        run: norminette .
+
+      # --- 3. ビルドとテスト ---
+
+      # Makefileを使ってプロジェクトをビルド
+      # `make`コマンドがない場合は、このステップを削除またはコメントアウト
+      - name: Build project
+        run: make
+
+      # テストを実行
+      # 独自のテストスクリプトがある場合は `run: ./your_test_script.sh` のように変更
+      - name: Run tests
+        run: make test
