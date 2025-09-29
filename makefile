@@ -10,9 +10,10 @@
 #                                                                              #
 # **************************************************************************** #
 
-INCLUDES = -I./mlx
+INCLUDES = -I./mlx -I./libft -I./includes
 
-LIBS = -L./mlx -lmlx -lXext -lX11 -lm -lz
+LIBFT = libft/libft.a
+LIBS = -L./mlx -lmlx ./libft/libft.a -lXext -lX11 -lm -lz
 
 NAME = fractol
 
@@ -21,21 +22,35 @@ CFLAGS = -Wall -Wextra -Werror
 CC = gcc
 
 SRC = srcs/main.c \
-	  mandelbrot.c \
-	  julia.c \
-	  burning_ship.c \
-	  utils.c \
-	  hooks.c \
-	  colors.c
+	  srcs/init.c \
+	  srcs/draw.c \
+	  srcs/events.c \
+	  srcs/utils.c \
+	  srcs/fractals.c
 
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
+all: $(LIBFT) $(NAME)
+
+$(LIBFT):
+	make -C libft
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(LIBS) -o $(NAME)
+
+clean:
+	rm -f $(OBJ)
+	make -C libft clean
+
+fclean: clean
+	rm -f $(NAME)
+	make -C libft fclean
+
+re: fclean all
+
+.PHONY: all clean fclean re
 
 

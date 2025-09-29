@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../includes/fractol.h>
+#include "fractol.h"
 
 int	main(int argc, char **argv)
 {
@@ -28,24 +28,53 @@ int	main(int argc, char **argv)
 
 void	print_usage(void)
 {
-	ft_printf
-	ft_putstr_fd("Fractal names:\n", 2);
-	ft_putstr_fd("  mandelbrot\n", 2);
-	ft_putstr_fd("  julia [real_part] [imaginary_part]\n", 2);
-	ft_putstr_fd("Example:\n", 2);
-	ft_putstr_fd("  ./fractol mandelbrot\n", 2);
-	ft_putstr_fd("  ./fractol julia -0.7 0.27015\n", 2);
+	ft_printf("Usage: ./fractol [fractal_type] [options]\n");
+	ft_printf("Fractal names:\n");
+	ft_printf("  mandelbrot\n");
+	ft_printf("  julia [real_part] [imaginary_part]\n");
+	ft_printf("Example:\n");
+	ft_printf("  ./fractol mandelbrot\n");
+	ft_printf("  ./fractol julia -0.7 0.27015\n");
+	ft_printf("\nControls:\n");
+	ft_printf("  ESC: Exit\n");
+	ft_printf("  Arrow keys: Move view\n");
+	ft_printf("  Mouse wheel: Zoom in/out\n");
+	ft_printf("  +/-: Adjust iteration count\n");
+	ft_printf("  R: Reset view\n");
+	ft_printf("  C: Change color scheme\n");
 }
 
 int run_mandelbrot(void)
 {
-	// マンデルブロ集合の描画ロジックをここに実装
+	t_data	data;
+
+	if (!init_data(&data, MANDELBROT, 0.0, 0.0))
+	{
+		ft_printf("Error: Failed to initialize\n");
+		return (1);
+	}
+	render_fractal(&data);
+	mlx_key_hook(data.win_ptr, key_hook, &data);
+	mlx_mouse_hook(data.win_ptr, mouse_hook, &data);
+	mlx_hook(data.win_ptr, 17, 0, close_hook, &data);
+	mlx_loop(data.mlx_ptr);
 	return (0);
 }
 
 int run_julia(double real, double imag)
 {
-	// ジュリア集合の描画ロジックをここに実装
+	t_data	data;
+
+	if (!init_data(&data, JULIA, real, imag))
+	{
+		ft_printf("Error: Failed to initialize\n");
+		return (1);
+	}
+	render_fractal(&data);
+	mlx_key_hook(data.win_ptr, key_hook, &data);
+	mlx_mouse_hook(data.win_ptr, mouse_hook, &data);
+	mlx_hook(data.win_ptr, 17, 0, close_hook, &data);
+	mlx_loop(data.mlx_ptr);
 	return (0);
 }
 
