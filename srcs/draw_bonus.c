@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "fractol_bonus.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -48,6 +48,8 @@ void	render_fractal(t_data *data)
 		draw_mandelbrot(data);
 	else if (data->fractal.type == JULIA)
 		draw_julia(data);
+	else if (data->fractal.type == TRICORN)
+		draw_tricorn(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 		data->img.img_ptr, 0, 0);
 }

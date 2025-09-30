@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractals.c                                         :+:      :+:    :+:   */
+/*   fractals_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "fractol_bonus.h"
 
 static double	calc_smooth_value(double z_sq_sum, int iter)
 {
@@ -64,6 +64,30 @@ double	julia_calc_smooth(double real, double imag, t_data *data)
 			return (calc_smooth_value(z_sq[0] + z_sq[1], iter));
 		temp = z_sq[0] - z_sq[1] + data->fractal.julia_real;
 		z[1] = 2.0 * z[0] * z[1] + data->fractal.julia_imag;
+		z[0] = temp;
+		iter++;
+	}
+	return (iter);
+}
+
+double	tricorn_calc_smooth(double real, double imag, int max_iter)
+{
+	double	z[2];
+	double	z_sq[2];
+	double	temp;
+	int		iter;
+
+	z[0] = 0.0;
+	z[1] = 0.0;
+	iter = 0;
+	while (iter < max_iter)
+	{
+		z_sq[0] = z[0] * z[0];
+		z_sq[1] = z[1] * z[1];
+		if (z_sq[0] + z_sq[1] > 256.0)
+			return (calc_smooth_value(z_sq[0] + z_sq[1], iter));
+		temp = z_sq[0] - z_sq[1] + real;
+		z[1] = -2.0 * z[0] * z[1] + imag;
 		z[0] = temp;
 		iter++;
 	}

@@ -22,6 +22,19 @@ static void	init_fractal_params(t_data *data, t_fractal_type type)
 	data->fractal.color_scheme = 0;
 }
 
+static void	cleanup_init_error(t_data *data)
+{
+	if (data->img.img_ptr && data->mlx_ptr)
+		mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
+	if (data->win_ptr && data->mlx_ptr)
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	if (data->mlx_ptr)
+	{
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+	}
+}
+
 int	init_data(t_data *data, t_fractal_type type, double julia_r, double julia_i)
 {
 	data->width = WIDTH;
@@ -32,11 +45,11 @@ int	init_data(t_data *data, t_fractal_type type, double julia_r, double julia_i)
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->width,
 			data->height, "Fract-ol");
 	if (!data->win_ptr)
-		return (0);
+		return (cleanup_init_error(data), 0);
 	data->img.img_ptr = mlx_new_image(data->mlx_ptr,
 			data->width, data->height);
 	if (!data->img.img_ptr)
-		return (0);
+		return (cleanup_init_error(data), 0);
 	data->img.addr = mlx_get_data_addr(data->img.img_ptr,
 			&data->img.bits_per_pixel,
 			&data->img.line_length,

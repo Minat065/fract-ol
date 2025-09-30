@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   fractol_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 20:54:59 by mirokugo          #+#    #+#             */
-/*   Updated: 2025/09/30 19:37:11 by mirokugo         ###   ########.fr       */
+/*   Updated: 2025/09/30 20:30:00 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRACTOL_H
-# define FRACTOL_H
+#ifndef FRACTOL_BONUS_H
+# define FRACTOL_BONUS_H
 
 # include <mlx.h>
 # include <stdlib.h>
@@ -39,7 +39,8 @@
 typedef enum e_fractal_type
 {
 	MANDELBROT,
-	JULIA
+	JULIA,
+	TRICORN
 }	t_fractal_type;
 
 typedef struct s_img
@@ -72,8 +73,10 @@ typedef struct s_data
 	int			width;
 	int			height;
 }	t_data;
+
 void	print_usage(void);
 int		run_mandelbrot(void);
+int		run_tricorn(void);
 int		run_julia(double real, double imag);
 int		validate_julia_args(char *real_str, char *imag_str);
 
@@ -98,7 +101,9 @@ int		get_ocean_color(double t);
 
 double	mandelbrot_calc_smooth(double real, double imag, int max_iter);
 double	julia_calc_smooth(double real, double imag, t_data *data);
+double	tricorn_calc_smooth(double real, double imag, int max_iter);
 void	draw_mandelbrot(t_data *data);
 void	draw_julia(t_data *data);
+void	draw_tricorn(t_data *data);
 
 #endif

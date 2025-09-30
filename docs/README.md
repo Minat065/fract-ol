@@ -1,127 +1,324 @@
-# Fract-ol
+# Fract-ol 🌌
 
-A beautiful fractal visualization program that renders Mandelbrot and Julia sets with stunning colors and smooth animations.
+> **42 Tokyo fract-olプロジェクト**: 美しいフラクタル図形を描画・探索できるインタラクティブなプログラム
 
-## 🌟 Features
+数学的に美しいMandelbrot集合、Julia集合、Tricorn集合を、滑らかな色彩とリアルタイムズームで楽しめます。
 
-- **High-quality fractal rendering** with smooth color transitions
-- **Interactive exploration** with zoom and pan controls
-- **Multiple color schemes** - Psychedelic, Sunset, and Ocean themes
-- **Real-time parameter adjustment** for Julia sets
-- **Optimized performance** for smooth user experience
+---
 
-## 🎯 Supported Fractals
+## 📖 ドキュメント構成
 
-### Mandelbrot Set
-The iconic fractal defined by the iterative formula: z = z² + c
+プロジェクトの理解度に応じて、以下の順番で読むことをおすすめします：
 
-### Julia Sets
-Beautiful fractal patterns with customizable complex parameters
+1. **[OVERVIEW.md](./OVERVIEW.md)** - 最初に読むべき全体像ガイド（5分）
+2. **[MATH_DETAILS.md](./MATH_DETAILS.md)** - フラクタル数学の詳細解説
+3. **[CODE_GUIDE.md](./CODE_GUIDE.md)** - コード詳細解説（1900行）
+4. **[implementation_plan.md](./implementation_plan.md)** - 実装手順
+5. **[TESTING.md](./TESTING.md)** - テスト方法
 
-## 🎮 Controls
+---
 
-| Key/Action | Function |
-|------------|----------|
-| `ESC` | Exit program |
-| `↑↓←→` | Pan/move view |
-| `Mouse Wheel` | Zoom in/out (centered on cursor) |
-| `+/-` | Increase/decrease iteration count |
-| `R` | Reset view to default |
-| `C` | Cycle through color schemes |
+## 🌟 主な機能
 
-## 🚀 Usage
+### 必須機能
+- ✅ **Mandelbrot集合とJulia集合** の高品質レンダリング
+- ✅ **マウスホイールズーム** - ほぼ無限に拡大可能
+- ✅ **スムースカラーリング** - 色の段差なし
+- ✅ **パラメータ指定** - コマンドラインで様々なJulia集合を表示
+- ✅ **3種類の配色** - Psychedelic、Sunset、Ocean
+
+### ボーナス機能
+- ✅ **Tricorn（Mandelbar）集合** - 第3のフラクタル
+- ✅ **マウス位置中心ズーム** - カーソル位置を固定してズーム
+- ✅ **矢印キー移動** - フラクタルを上下左右に移動
+- ✅ **配色切り替え** - Cキーでリアルタイム変更
+
+---
+
+## 🎯 対応フラクタル
+
+### 1. Mandelbrot集合
+最も有名なフラクタル。無限に拡大しても複雑なパターンが現れる。
+
+**式**: `z = z² + c` （z初期値0）
 
 ```bash
-# Compile
-make
-
-# Display Mandelbrot set
 ./fractol mandelbrot
-
-# Display Julia set with custom parameters
-./fractol julia <real_part> <imaginary_part>
-
-# Examples of beautiful Julia sets
-./fractol julia -0.7 0.27015
-./fractol julia -0.8 0.156
-./fractol julia -0.4 0.6
-./fractol julia 0.285 0.01
 ```
 
-## 🎨 Color Schemes
+### 2. Julia集合
+パラメータによって無限のバリエーション。美しい対称形状。
 
-1. **Psychedelic** - Vibrant rainbow gradients with high contrast
-2. **Sunset** - Warm colors transitioning from purple to red to yellow
-3. **Ocean** - Cool blue tones reminiscent of deep ocean depths
+**式**: `z = z² + c` （c固定、z初期値は座標）
 
-## 🛠️ Technical Details
+```bash
+# 美しいJulia集合の例
+./fractol julia -0.7 0.27015    # ドラゴン型
+./fractol julia -0.8 0.156      # 渦巻き
+./fractol julia -0.4 0.6        # 雪の結晶
+./fractol julia 0.285 0.01      # 蝶々
+```
 
-### Requirements
-- Linux/Unix environment
-- X11 development libraries
-- Math library support
-- C compiler (gcc)
+### 3. Tricorn（Mandelbar）集合【ボーナス】
+共役複素数を使ったMandelbrotの変種。鋭角的で攻撃的な形状。
 
-### Dependencies
-- **MinilibX** - Graphics library for window management and rendering
-- **libft** - Custom C utility library
-- **X11 libraries** - For display functionality
+**式**: `z = conj(z)² + c`
 
-### Installation
+```bash
+./fractol tricorn
+```
+
+---
+
+## 🎮 操作方法
+
+### 必須版（`make`）
+| 操作 | 機能 |
+|------|------|
+| `ESC` | プログラム終了 |
+| `マウスホイール` | ズームイン・アウト（中心点固定） |
+
+### ボーナス版（`make bonus`）
+| 操作 | 機能 |
+|------|------|
+| `ESC` | プログラム終了 |
+| `↑↓←→` | ビュー移動（矢印キー） |
+| `マウスホイール` | ズームイン・アウト（**マウス位置中心**） |
+| `+` / `-` | 反復回数増減（詳細度調整） |
+| `R` | ビューをリセット（初期状態に戻る） |
+| `C` | 配色切り替え（Psychedelic → Sunset → Ocean） |
+
+---
+
+## 🚀 使い方
+
+### ビルド
+
+```bash
+# 必須版をビルド
+make
+
+# ボーナス版をビルド
+make bonus
+
+# クリーンアップ
+make fclean
+
+# 再ビルド
+make re
+```
+
+### 実行
+
+```bash
+# 必須版の実行例
+./fractol mandelbrot              # Mandelbrot集合
+./fractol julia -0.7 0.27015      # Julia集合（パラメータ指定）
+
+# ボーナス版の実行例（make bonusでビルド後）
+./fractol mandelbrot              # Mandelbrot集合
+./fractol tricorn                 # Tricorn集合
+./fractol julia -0.8 0.156        # Julia集合
+
+# その他の美しいJulia集合
+./fractol julia -0.4 0.6          # 雪の結晶
+./fractol julia 0.285 0.01        # 蝶々
+./fractol julia -0.70176 -0.3842  # サンゴ
+./fractol julia -0.835 -0.2321    # 稲妻
+```
+
+### 引数エラー時
+
+```bash
+$ ./fractol
+Usage: ./fractol [fractal_type] [options]
+Fractal names:
+  mandelbrot
+  julia [real_part] [imaginary_part]
+...
+```
+
+---
+
+## 🎨 配色パターン
+
+ボーナス版では`C`キーで切り替え可能：
+
+### 1. Psychedelic（サイケデリック）
+- **特徴**: RGB各チャンネルでサイン波を使用
+- **効果**: 虹色の鮮やかなグラデーション
+- **数式**: `r = 127.5 * (1 + sin(t * 12))`
+
+### 2. Sunset（夕焼け）
+- **特徴**: 段階的な色遷移
+- **効果**: 紫→赤→黄→緑→青の夕焼け風
+- **用途**: 落ち着いた雰囲気
+
+### 3. Ocean（深海）
+- **特徴**: 青系統の色調
+- **効果**: 深海のような神秘的な青
+- **用途**: クールで美しい表示
+
+---
+
+## 🛠️ 技術詳細
+
+### 環境要件
+- **OS**: Linux/Unix環境（WSL2でも動作）
+- **コンパイラ**: gcc（C言語）
+- **ライブラリ**: X11開発ライブラリ、Math library
+
+### 依存関係
+- **MinilibX** - グラフィックスライブラリ（ウィンドウ管理・描画）
+- **libft** - カスタムC標準ライブラリ（42 School課題）
+- **X11** - ディスプレイ機能
+
+### インストール
 ```bash
 git clone <repository>
 cd fract-ol
-make
+make          # 必須版
+make bonus    # ボーナス版
 ```
 
-## 🔧 Implementation Highlights
+---
 
-- **Smooth coloring algorithm** for eliminating color banding
-- **Optimized calculation loops** with early escape conditions  
-- **Precise zoom positioning** centered on mouse cursor
-- **Memory-safe operations** with proper cleanup
-- **Input validation** for robust error handling
+## 🔧 実装のハイライト
 
-## 🎯 42 School Compliance
+### パフォーマンス最適化
+- ✅ **平方根計算の省略**: `|z|² > 256`で判定（`|z| > 16`の代わり）
+- ✅ **計算結果の再利用**: `z_sq[0]`, `z_sq[1]`を保存
+- ✅ **早期脱出判定**: 発散した瞬間にループ終了
+- ✅ **画像バッファ直接操作**: `mlx_pixel_put`を使わず高速化
 
-- ✅ **Norminette** compliant code
-- ✅ **Memory leak free** (valgrind tested)
-- ✅ **Error handling** for all edge cases
-- ✅ **Makefile** with standard rules
-- ✅ **No forbidden functions** used
+### 数学的工夫
+- ✅ **スムースカラーリング**: 対数スケールで色の段差を解消
+  ```c
+  smooth = iter + 1 - log(log(|z|)) / log(2)
+  ```
+- ✅ **複素数計算**: 配列`[実部, 虚部]`で効率的に表現
+- ✅ **座標変換**: スクリーン座標↔複素平面座標の正確な変換
 
-## 📊 Performance
+### ユーザビリティ
+- ✅ **マウス位置中心ズーム**: カーソル位置を固定してズーム
+  ```c
+  new_offset = mouse_pos + (old_offset - mouse_pos) / zoom_factor
+  ```
+- ✅ **ズーム適応移動**: 拡大率に応じて移動量を自動調整
+  ```c
+  move_amount = 0.1 / zoom
+  ```
+- ✅ **入力検証**: Julia集合パラメータの数値チェック
 
-- Efficient calculation with squared term reuse
-- Smooth real-time zooming up to extreme magnifications
-- Responsive controls even at high iteration counts
-- Optimized color computation algorithms
+### コード品質
+- ✅ **メモリ安全**: すべてのmallocにエラーチェック
+- ✅ **適切なクリーンアップ**: 終了時にすべてのリソースを解放
+- ✅ **Norm準拠**: 42 Schoolのコーディング規約に完全準拠
+  - 関数25行以内
+  - 1関数5変数以内
+  - 1ファイル5関数以内
 
-## 🐛 Troubleshooting
+---
 
-**Program won't start:**
-- Ensure X11 libraries are installed
-- Check display environment variable: `echo $DISPLAY`
+## 🎯 42 School 準拠状況
 
-**Julia set parameters not working:**
-- Parameters must be valid decimal numbers
-- Use format: `./fractol julia -0.7 0.27015`
+### 必須要件
+- ✅ **Norminette**: 全ファイルNorm準拠
+- ✅ **メモリリークなし**: valgrindでテスト済み
+- ✅ **エラーハンドリング**: すべてのエッジケースに対応
+- ✅ **Makefile**: 標準ルール完備（all, clean, fclean, re, bonus）
+- ✅ **許可関数のみ使用**: 課題で禁止された関数は不使用
 
-**Performance issues:**
-- Lower iteration count with `-` key
-- Reset zoom level with `R` key
+### 必須機能
+- ✅ Mandelbrot集合とJulia集合
+- ✅ マウスホイールでズーム
+- ✅ コマンドラインパラメータ
+- ✅ 色を使ったフラクタル深度表現
+- ✅ ESCキー・×ボタンでクリーン終了
+- ✅ MLX images使用
 
-## 🎉 Fun Facts
+### ボーナス機能
+- ✅ もう一つのフラクタル（Tricorn）
+- ✅ マウス位置中心のズーム
+- ✅ 矢印キーでビュー移動
+- ✅ カラーレンジのシフト
 
-- The Mandelbrot set boundary has infinite complexity
-- Julia sets are named after mathematician Gaston Julia
-- Fractals exhibit self-similarity at different scales
-- The color schemes use mathematical functions for smooth transitions
+---
 
-## 👨‍💻 Author
+## 📊 パフォーマンス
+
+- **リアルタイム描画**: 800x600ピクセルを高速レンダリング
+- **極限ズーム**: doubleの精度限界まで拡大可能
+- **レスポンシブ**: 高反復回数でも滑らかな操作感
+- **最適化**: 計算の再利用と早期脱出で高速化
+
+---
+
+## 🐛 トラブルシューティング
+
+### プログラムが起動しない
+```bash
+# X11ライブラリが必要
+sudo apt-get install libx11-dev libxext-dev
+
+# ディスプレイ環境変数を確認
+echo $DISPLAY
+```
+
+### Juliaセットのパラメータが効かない
+```bash
+# 正しい形式（小数）
+./fractol julia -0.7 0.27015  # ✅
+
+# ダメな例
+./fractol julia -.7 .27015    # ❌ 先頭の0が必要
+./fractol julia abc xyz       # ❌ 数値のみ
+```
+
+### パフォーマンスが悪い
+- **解決1**: `-`キーで反復回数を減らす（描画が粗くなるが高速化）
+- **解決2**: `R`キーでズームをリセット
+- **解決3**: ズームしすぎると計算が重くなるため、適度なズームで
+
+---
+
+## 🎉 豆知識
+
+### フラクタルの不思議
+- **無限の複雑さ**: Mandelbrot集合の境界は、どこまでズームしても新しいパターンが現れる
+- **名前の由来**: Julia集合は数学者ガストン・ジュリアに由来
+- **自己相似性**: フラクタルは異なるスケールで同じパターンを示す
+- **次元**: Mandelbrot集合の境界は2次元ではなく、約1.9999次元！
+
+### 実装の工夫
+- **配色**: サイン波、対数、段階的グラデーション等の数学関数で滑らかな色遷移
+- **複素数**: 配列で表現することで計算を効率化
+- **ズーム**: 固定点を中心とした座標変換で直感的な操作
+
+---
+
+## 📖 さらに学ぶ
+
+### おすすめの順番
+1. **[OVERVIEW.md](./OVERVIEW.md)** ← まずここから！
+2. **[MATH_DETAILS.md](./MATH_DETAILS.md)** - 数学の詳細
+3. **[CODE_GUIDE.md](./CODE_GUIDE.md)** - コード解説
+
+### 参考資料
+- **Mandelbrot集合**: Wikipedia日本語版
+- **複素数**: 高校数学の教科書
+- **フラクタル幾何学**: ベノワ・マンデルブロ著
+
+---
+
+## 👨‍💻 制作者
 
 **mirokugo** - 42 Tokyo Student
 
 ---
 
-*Explore the infinite beauty of mathematics with fract-ol!* ✨
+<div align="center">
+
+**数学の無限の美しさを、fract-olで探索しよう！** ✨🌌
+
+</div>
