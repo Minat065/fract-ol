@@ -54,6 +54,8 @@ dkms.conf
 # Project specific
 mlx/
 fractol
+CLAUDE.md
+docs/
 
 # debug information files
 *.dwo
