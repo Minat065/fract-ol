@@ -6,23 +6,11 @@
 /*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:00:00 by mirokugo          #+#    #+#             */
-/*   Updated: 2025/09/30 20:30:00 by mirokugo         ###   ########.fr       */
+/*   Updated: 2025/10/02 00:11:32 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol_bonus.h"
-
-int	close_hook(t_data *data)
-{
-	cleanup(data);
-	return (0);
-}
-
-int	expose_hook(t_data *data)
-{
-	render_fractal(data);
-	return (0);
-}
 
 static int	handle_movement_keys(int keycode, t_data *data)
 {

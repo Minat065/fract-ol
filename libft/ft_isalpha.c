@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/02 00:10:06 by mirokugo          #+#    #+#             */
-/*   Updated: 2025/10/02 00:10:09 by mirokugo         ###   ########.fr       */
+/*   Created: 2024/04/16 17:36:33 by mirokugo          #+#    #+#             */
+/*   Updated: 2024/05/03 17:33:16 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
-int	cleanup(t_data *data)
+int	ft_isalpha(int c)
 {
-	if (data->img.img_ptr)
-		mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
-	if (data->win_ptr)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	if (data->mlx_ptr)
-		mlx_destroy_display(data->mlx_ptr);
-	if (data->mlx_ptr)
-		free(data->mlx_ptr);
-	exit(0);
+	if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'))
+		return (1);
 	return (0);
 }
+
+//
+// int	main(void)
+//{
+//	int i = 0;
+//	while (i < 256)
+//	{
+//		if (isalpha(i) != ft_isalpha(i))
+//			printf("error: %d\n", i);
+//		i++;
+//	}
+//	printf("done\n");
+//	return (0);
+//}

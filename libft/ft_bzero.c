@@ -1,27 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/02 00:10:06 by mirokugo          #+#    #+#             */
-/*   Updated: 2025/10/02 00:10:09 by mirokugo         ###   ########.fr       */
+/*   Created: 2024/04/16 22:10:50 by mirokugo          #+#    #+#             */
+/*   Updated: 2024/05/03 17:59:40 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
-int	cleanup(t_data *data)
+void	ft_bzero(void *s, size_t n)
 {
-	if (data->img.img_ptr)
-		mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
-	if (data->win_ptr)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	if (data->mlx_ptr)
-		mlx_destroy_display(data->mlx_ptr);
-	if (data->mlx_ptr)
-		free(data->mlx_ptr);
-	exit(0);
-	return (0);
+	unsigned char	*ptr;
+	size_t			i;
+
+	ptr = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+	{
+		ptr[i] = 0;
+		i++;
+	}
 }
+
+/* #include <stdio.h>
+#include <string.h>
+
+int	main(void)
+{
+	char s[10] = "123456789";
+	char s2[10] = "123456789";
+	ft_bzero(s, 5);
+	bzero(s2, 5);
+	printf("ft_bzero: %s\n", s);
+	printf("bzero: %s\n", s2);
+	return (0);
+} */

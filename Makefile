@@ -6,7 +6,7 @@
 #    By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/16 21:57:10 by mirokugo          #+#    #+#              #
-#    Updated: 2025/09/30 20:30:00 by mirokugo         ###   ########.fr        #
+#    Updated: 2025/10/02 00:12:36 by mirokugo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC_BONUS = srcs/main_bonus.c \
 			srcs/init.c \
 			srcs/draw_bonus.c \
 			srcs/events_bonus.c \
+			srcs/events_utils_bonus.c\
 			srcs/cleanup.c \
 			srcs/utils.c \
 			srcs/fractals_bonus.c \
@@ -55,14 +56,18 @@ $(LIBFT):
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(OBJ) $(LIBS) -o $(NAME)
 
-bonus: $(LIBFT) $(OBJ_BONUS)
+bonus: .bonus
+
+.bonus: $(OBJ_BONUS) $(LIBFT)
 	$(CC) $(OBJ_BONUS) $(LIBS) -o $(NAME)
+	@touch .bonus
 
 clean:
 	rm -f $(OBJ) $(OBJ_BONUS)
+	rm -f .bonus
 	make -C libft clean
 
 fclean: clean

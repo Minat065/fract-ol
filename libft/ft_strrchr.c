@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/02 00:10:06 by mirokugo          #+#    #+#             */
-/*   Updated: 2025/10/02 00:10:09 by mirokugo         ###   ########.fr       */
+/*   Created: 2024/04/19 03:56:38 by mirokugo          #+#    #+#             */
+/*   Updated: 2024/05/03 17:51:01 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
-int	cleanup(t_data *data)
+char	*ft_strrchr(const char *s, int c)
 {
-	if (data->img.img_ptr)
-		mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
-	if (data->win_ptr)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	if (data->mlx_ptr)
-		mlx_destroy_display(data->mlx_ptr);
-	if (data->mlx_ptr)
-		free(data->mlx_ptr);
-	exit(0);
-	return (0);
+	char	*last_ad;
+	char	c1;
+
+	c1 = (char)c;
+	last_ad = NULL;
+	if (c1 == '\0')
+	{
+		while (*s)
+			s++;
+		return ((char *)s);
+	}
+	while (*s)
+	{
+		if (*s == c1)
+			last_ad = (char *)s;
+		s++;
+	}
+	return (last_ad);
 }

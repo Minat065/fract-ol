@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mirokugo <mirokugo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/02 00:10:06 by mirokugo          #+#    #+#             */
-/*   Updated: 2025/10/02 00:10:09 by mirokugo         ###   ########.fr       */
+/*   Created: 2024/05/02 17:28:58 by mirokugo          #+#    #+#             */
+/*   Updated: 2024/05/03 17:43:07 by mirokugo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
-int	cleanup(t_data *data)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	if (data->img.img_ptr)
-		mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
-	if (data->win_ptr)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	if (data->mlx_ptr)
-		mlx_destroy_display(data->mlx_ptr);
-	if (data->mlx_ptr)
-		free(data->mlx_ptr);
-	exit(0);
-	return (0);
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		f(i, &s[i]);
+		i++;
+	}
 }
+
+// int	main(void)
+// {
+// 	char	*s;
+
+// 	s = ft_strdup("abc");
+// 	ft_striteri(s, function);
+// 	printf("%s\n", s);
+// 	free(s);
+// 	return (0);
+// }
